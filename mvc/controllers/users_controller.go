@@ -22,6 +22,7 @@ func GetUser(resp http.ResponseWriter, req *http.Request)  {
 		}
 
 		jsonUserErr, _ := json.Marshal(apiErr)
+		resp.Header().Set("Content-Type", "application/json")
 		resp.WriteHeader(apiErr.Status)
 		resp.Write(jsonUserErr)
 		return
@@ -31,14 +32,17 @@ func GetUser(resp http.ResponseWriter, req *http.Request)  {
 	if apiErr!=nil{
 		// Handle the error and return to the client
 		jsonUserErr, _ := json.Marshal(apiErr)
+		resp.Header().Set("Content-Type", "application/json")
 		resp.WriteHeader(apiErr.Status)
 		resp.Write(jsonUserErr)
+
 		return
 	}
 
 	// return user to client
 	jsonUser, _ :=  json.Marshal(user)
 
+	resp.Header().Set("Content-Type", "application/json")
 	resp.Write(jsonUser)
 
 }
